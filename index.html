@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单设计进度管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- 页面标题 -->
+        <header class="app-header">
+            <h1 class="app-title">订单设计进度管理系统</h1>
+        </header>
+
+        <!-- 标签页导航 -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="progress">进度录入</button>
+            <button class="tab-btn" data-tab="calc">计算与预警</button>
+            <button class="tab-btn" data-tab="info">项目信息</button>
+            <button class="tab-btn" data-tab="manage">管理</button>
+        </nav>
+
+        <!-- 标签页内容 -->
+        <div class="tab-content">
+
+            <!-- ========== 标签1：进度录入 ========== -->
+            <div class="tab-panel active" id="tab-progress">
+                <div class="panel-header">
+                    <h2 class="panel-title">工程师进度录入</h2>
+                    <p class="panel-desc">选择订单号、工程师和对应进度类型进行进度更新</p>
+                </div>
+
+                <!-- 选择订单号 -->
+                <div class="section">
+                    <h3 class="section-title">选择订单号</h3>
+                    <div class="card-grid" id="orderGrid">
+                        <button class="order-card" data-order="J26000-27-1">
+                            <span class="order-id">J26000-27</span>
+                            <span class="order-type">环网箱-环保空气绝缘</span>
+                        </button>
+                        <button class="order-card" data-order="J26000-27-2">
+                            <span class="order-id">J26000-27</span>
+                            <span class="order-type">环网箱-固体绝缘</span>
+                        </button>
+                        <button class="order-card" data-order="J24051-24">
+                            <span class="order-id">J24051-24</span>
+                            <span class="order-type">配电箱</span>
+                        </button>
+                        <button class="order-card" data-order="J25088-11">
+                            <span class="order-id">J25088-11</span>
+                            <span class="order-type">环网箱-固体绝缘</span>
+                        </button>
+                        <button class="order-card" data-order="J25041-19">
+                            <span class="order-id">J25041-19</span>
+                            <span class="order-type">环网箱-环保空气绝缘</span>
+                        </button>
+                        <button class="order-card" data-order="J25055-02-00">
+                            <span class="order-id">J25055-02-00</span>
+                            <span class="order-type">环网柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25055-06">
+                            <span class="order-id">J25055-06</span>
+                            <span class="order-type">环网柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25055-03">
+                            <span class="order-id">J25055-03</span>
+                            <span class="order-type">环网柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25038">
+                            <span class="order-id">J25038</span>
+                            <span class="order-type">SGN-GB</span>
+                        </button>
+                        <button class="order-card" data-order="TEST001">
+                            <span class="order-id">TEST001</span>
+                            <span class="order-type">GGD</span>
+                        </button>
+                        <button class="order-card" data-order="J25089-11">
+                            <span class="order-id">J25089-11</span>
+                            <span class="order-type">环保柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25089-15">
+                            <span class="order-id">J25089-15</span>
+                            <span class="order-type">环保柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25089-16">
+                            <span class="order-id">J25089-16</span>
+                            <span class="order-type">环保柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25089-13">
+                            <span class="order-id">J25089-13</span>
+                            <span class="order-type">环保柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25089-12">
+                            <span class="order-id">J25089-12</span>
+                            <span class="order-type">环保柜</span>
+                        </button>
+                        <button class="order-card" data-order="J25089-14">
+                            <span class="order-id">J25089-14</span>
+                            <span class="order-type">环保柜</span>
+                        </button>
+                    </div>
+                    <div class="more-btn-wrap">
+                        <button class="more-btn" id="moreOrders">更多订单...</button>
+                    </div>
+                </div>
+
+                <!-- 选择工程师 -->
+                <div class="section">
+                    <h3 class="section-title">选择工程师</h3>
+                    <div class="card-grid" id="engineerGrid">
+                        <button class="engineer-card" data-engineer="黄超">
+                            <span class="eng-name">黄超</span>
+                            <span class="eng-role">结构</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="黄海涛">
+                            <span class="eng-name">黄海涛</span>
+                            <span class="eng-role">电气</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="梁凯豪">
+                            <span class="eng-name">梁凯豪</span>
+                            <span class="eng-role">结构</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="马俊贤">
+                            <span class="eng-name">马俊贤</span>
+                            <span class="eng-role">结构</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="毛浚远">
+                            <span class="eng-name">毛浚远</span>
+                            <span class="eng-role">结构</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="莫植浩">
+                            <span class="eng-name">莫植浩</span>
+                            <span class="eng-role">结构</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="彭泽锋">
+                            <span class="eng-name">彭泽锋</span>
+                            <span class="eng-role">电气</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="王康伟">
+                            <span class="eng-name">王康伟</span>
+                            <span class="eng-role">电气</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="阳锦涛">
+                            <span class="eng-name">阳锦涛</span>
+                            <span class="eng-role">结构</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="张南">
+                            <span class="eng-name">张南</span>
+                            <span class="eng-role">电气</span>
+                        </button>
+                        <button class="engineer-card" data-engineer="赵志伸">
+                            <span class="eng-name">赵志伸</span>
+                            <span class="eng-role">电气</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 选择进度类型 -->
+                <div class="section">
+                    <h3 class="section-title">选择进度类型（可多选）</h3>
+                    <div class="card-grid card-grid-type" id="typeGrid">
+                        <button class="type-card" data-type="一次电气">一次电气</button>
+                        <button class="type-card" data-type="气箱">气箱</button>
+                        <button class="type-card" data-type="二次电气(一次设备)">二次电气(一次设备)</button>
+                        <button class="type-card" data-type="二次电气">二次电气</button>
+                        <button class="type-card" data-type="钣金(一次设备)">钣金(一次设备)</button>
+                        <button class="type-card" data-type="DTU电气">DTU电气</button>
+                        <button class="type-card" data-type="户外箱">户外箱</button>
+                        <button class="type-card" data-type="DTU钣金">DTU钣金</button>
+                        <button class="type-card" data-type="电缆附件规格">电缆附件规格</button>
+                        <button class="type-card" data-type="其他">其他</button>
+                    </div>
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="submit-wrap">
+                    <button class="submit-btn" id="submitBtn" disabled>提交进度</button>
+                </div>
+            </div>
+
+            <!-- ========== 标签2：计算与预警 ========== -->
+            <div class="tab-panel" id="tab-calc">
+                <div class="panel-header">
+                    <h2 class="panel-title">进度计算与预警</h2>
+                    <p class="panel-desc">根据已录入的进度数据，自动计算各订单完成率并发出预警</p>
+                </div>
+                <div class="calc-content">
+                    <!-- 统计概览 -->
+                    <div class="calc-stats">
+                        <div class="calc-stat-card stat-total">
+                            <div class="calc-stat-num">16</div>
+                            <div class="calc-stat-label">总订单数</div>
+                        </div>
+                        <div class="calc-stat-card stat-normal">
+                            <div class="calc-stat-num">8</div>
+                            <div class="calc-stat-label">正常推进</div>
+                        </div>
+                        <div class="calc-stat-card stat-warn">
+                            <div class="calc-stat-num">5</div>
+                            <div class="calc-stat-label">进度预警</div>
+                        </div>
+                        <div class="calc-stat-card stat-danger">
+                            <div class="calc-stat-num">3</div>
+                            <div class="calc-stat-label">严重滞后</div>
+                        </div>
+                    </div>
+                    <!-- 预警列表 -->
+                    <div class="alert-list">
+                        <div class="alert-row alert-danger">
+                            <span class="alert-tag">严重滞后</span>
+                            <span class="alert-order">J25055-02-00 环网柜</span>
+                            <span class="alert-detail">整体进度仅 12%，距截止日期仅剩 15 天</span>
+                        </div>
+                        <div class="alert-row alert-danger">
+                            <span class="alert-tag">严重滞后</span>
+                            <span class="alert-order">J25089-16 环保柜</span>
+                            <span class="alert-detail">整体进度仅 8%，距截止日期仅剩 10 天</span>
+                        </div>
+                        <div class="alert-row alert-danger">
+                            <span class="alert-tag">严重滞后</span>
+                            <span class="alert-order">J25089-14 环保柜</span>
+                            <span class="alert-detail">整体进度仅 15%，距截止日期仅剩 12 天</span>
+                        </div>
+                        <div class="alert-row alert-warn">
+                            <span class="alert-tag">预警</span>
+                            <span class="alert-order">J26000-27 环网箱-环保空气绝缘</span>
+                            <span class="alert-detail">整体进度 35%，建议加快结构设计</span>
+                        </div>
+                        <div class="alert-row alert-warn">
+                            <span class="alert-tag">预警</span>
+                            <span class="alert-order">J25088-11 环网箱-固体绝缘</span>
+                            <span class="alert-detail">整体进度 40%，二次电气进度偏慢</span>
+                        </div>
+                        <div class="alert-row alert-warn">
+                            <span class="alert-tag">预警</span>
+                            <span class="alert-order">J25041-19 环网箱-环保空气绝缘</span>
+                            <span class="alert-detail">整体进度 42%，钣金进度需关注</span>
+                        </div>
+                        <div class="alert-row alert-warn">
+                            <span class="alert-tag">预警</span>
+                            <span class="alert-order">J25055-06 环网柜</span>
+                            <span class="alert-detail">整体进度 38%，气箱设计进度偏慢</span>
+                        </div>
+                        <div class="alert-row alert-warn">
+                            <span class="alert-tag">预警</span>
+                            <span class="alert-order">J25089-12 环保柜</span>
+                            <span class="alert-detail">整体进度 30%，多项进度需加快</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 标签3：项目信息 ========== -->
+            <div class="tab-panel" id="tab-info">
+                <div class="panel-header">
+                    <h2 class="panel-title">项目信息</h2>
+                    <p class="panel-desc">管理订单信息，支持新增、编辑、删除订单</p>
+                </div>
+                <div class="info-content">
+                    <!-- 项目信息录入表单 -->
+                    <div class="project-form-container">
+                        <!-- 智能识别区域 -->
+                        <div class="smart-recognition">
+                            <h3 class="recognition-title">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                                </svg>
+                                智能识别（可选）
+                            </h3>
+                            <p class="recognition-desc">粘贴包含订单信息的图片或文字，系统将自动识别订单号、产品类型和数量</p>
+                            
+                            <div class="recognition-tabs">
+                                <button class="rec-tab active" data-rec="image">图片识别</button>
+                                <button class="rec-tab" data-rec="text">文字识别</button>
+                            </div>
+                            
+                            <div class="recognition-content">
+                                <div class="rec-panel active" id="rec-image">
+                                    <div class="upload-area" id="uploadArea">
+                                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                        <p class="upload-text">按 <kbd>Ctrl+V</kbd> 粘贴图片</p>
+                                        <p class="upload-hint">支持 JPG、PNG、WebP 等图片格式</p>
+                                    </div>
+                                </div>
+                                <div class="rec-panel" id="rec-text">
+                                    <textarea class="text-input" placeholder="请粘贴订单信息文字..." rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 表单区域 -->
+                        <div class="project-form">
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">订单编号</label>
+                                    <input type="text" class="form-input" id="projectOrderNo" placeholder="请输入订单编号">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">产品类型</label>
+                                    <div class="product-type-grid" id="productTypeGrid">
+                                        <button class="product-type-btn" data-type="环网柜">环网柜</button>
+                                        <button class="product-type-btn" data-type="环网箱">环网箱</button>
+                                        <button class="product-type-btn" data-type="配电箱">配电箱</button>
+                                        <button class="product-type-btn" data-type="GCK">GCK</button>
+                                        <button class="product-type-btn" data-type="中置柜">中置柜</button>
+                                        <button class="product-type-btn" data-type="其他">其他</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">数量</label>
+                                    <div class="quantity-options">
+                                        <label class="radio-label">
+                                            <input type="radio" name="quantityType" value="auto" checked>
+                                            <span>按订单数量（自动填入）</span>
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="quantityType" value="manual">
+                                            <span>自行输入数量</span>
+                                        </label>
+                                    </div>
+                                    <input type="number" class="form-input" id="projectQuantity" placeholder="请输入数量" style="display:none;">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">订单下达日期</label>
+                                    <input type="date" class="form-input" id="projectOrderDate" value="2026-05-09">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">设计完成日期</label>
+                                    <input type="date" class="form-input" id="projectDesignDate" value="2026-05-13">
+                                </div>
+                            </div>
+
+                            <button class="submit-project-btn" id="submitProjectBtn">提交项目信息</button>
+                        </div>
+                    </div>
+
+                    <!-- 搜索/筛选/新增 -->
+                    <div class="info-toolbar">
+                        <div class="info-toolbar-left">
+                            <input type="text" class="info-search" placeholder="搜索订单号或产品类型..." id="infoSearch">
+                            <select class="info-filter" id="infoFilter">
+                                <option value="">全部状态</option>
+                                <option value="normal">正常</option>
+                                <option value="warn">预警</option>
+                                <option value="danger">严重滞后</option>
+                            </select>
+                        </div>
+                        <button class="info-add-btn" id="addProjectBtn">+ 新增订单</button>
+                    </div>
+                    <!-- 项目表格 -->
+                    <div class="info-table-wrap">
+                        <table class="info-table">
+                            <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>产品类型</th>
+                                    <th>负责人</th>
+                                    <th>整体进度</th>
+                                    <th>状态</th>
+                                    <th>截止日期</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="infoTableBody">
+                                <tr data-status="warn" data-order="J26000-27-1" data-product="环网箱-环保空气绝缘" data-manager="黄超 / 黄海涛" data-progress="35" data-deadline="2026-06-15">
+                                    <td>J26000-27</td>
+                                    <td>环网箱-环保空气绝缘</td>
+                                    <td>黄超 / 黄海涛</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:35%"></div></div><span>35%</span></td>
+                                    <td><span class="tag tag-warn">预警</span></td>
+                                    <td>2026-06-15</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J26000-27-2" data-product="环网箱-固体绝缘" data-manager="梁凯豪 / 张南" data-progress="55" data-deadline="2026-06-30">
+                                    <td>J26000-27</td>
+                                    <td>环网箱-固体绝缘</td>
+                                    <td>梁凯豪 / 张南</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:55%"></div></div><span>55%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-06-30</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J24051-24" data-product="配电箱" data-manager="马俊贤 / 彭泽锋" data-progress="78" data-deadline="2026-05-25">
+                                    <td>J24051-24</td>
+                                    <td>配电箱</td>
+                                    <td>马俊贤 / 彭泽锋</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:78%"></div></div><span>78%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-05-25</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="warn" data-order="J25088-11" data-product="环网箱-固体绝缘" data-manager="毛浚远 / 王康伟" data-progress="40" data-deadline="2026-06-10">
+                                    <td>J25088-11</td>
+                                    <td>环网箱-固体绝缘</td>
+                                    <td>毛浚远 / 王康伟</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:40%"></div></div><span>40%</span></td>
+                                    <td><span class="tag tag-warn">预警</span></td>
+                                    <td>2026-06-10</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="warn" data-order="J25041-19" data-product="环网箱-环保空气绝缘" data-manager="莫植浩 / 阳锦涛" data-progress="42" data-deadline="2026-06-20">
+                                    <td>J25041-19</td>
+                                    <td>环网箱-环保空气绝缘</td>
+                                    <td>莫植浩 / 阳锦涛</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:42%"></div></div><span>42%</span></td>
+                                    <td><span class="tag tag-warn">预警</span></td>
+                                    <td>2026-06-20</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="danger" data-order="J25055-02-00" data-product="环网柜" data-manager="黄超 / 赵志伸" data-progress="12" data-deadline="2026-05-24">
+                                    <td>J25055-02-00</td>
+                                    <td>环网柜</td>
+                                    <td>黄超 / 赵志伸</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-danger" style="width:12%"></div></div><span>12%</span></td>
+                                    <td><span class="tag tag-danger">严重滞后</span></td>
+                                    <td>2026-05-24</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="warn" data-order="J25055-06" data-product="环网柜" data-manager="梁凯豪 / 张南" data-progress="38" data-deadline="2026-06-18">
+                                    <td>J25055-06</td>
+                                    <td>环网柜</td>
+                                    <td>梁凯豪 / 张南</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:38%"></div></div><span>38%</span></td>
+                                    <td><span class="tag tag-warn">预警</span></td>
+                                    <td>2026-06-18</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J25055-03" data-product="环网柜" data-manager="马俊贤 / 彭泽锋" data-progress="65" data-deadline="2026-07-05">
+                                    <td>J25055-03</td>
+                                    <td>环网柜</td>
+                                    <td>马俊贤 / 彭泽锋</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:65%"></div></div><span>65%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-07-05</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J25038" data-product="SGN-GB" data-manager="黄海涛 / 王康伟" data-progress="82" data-deadline="2026-05-30">
+                                    <td>J25038</td>
+                                    <td>SGN-GB</td>
+                                    <td>黄海涛 / 王康伟</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:82%"></div></div><span>82%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-05-30</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="TEST001" data-product="GGD" data-manager="阳锦涛 / 赵志伸" data-progress="90" data-deadline="2026-05-15">
+                                    <td>TEST001</td>
+                                    <td>GGD</td>
+                                    <td>阳锦涛 / 赵志伸</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:90%"></div></div><span>90%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-05-15</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J25089-11" data-product="环保柜" data-manager="毛浚远 / 黄海涛" data-progress="60" data-deadline="2026-06-25">
+                                    <td>J25089-11</td>
+                                    <td>环保柜</td>
+                                    <td>毛浚远 / 黄海涛</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:60%"></div></div><span>60%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-06-25</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J25089-15" data-product="环保柜" data-manager="莫植浩 / 张南" data-progress="50" data-deadline="2026-07-10">
+                                    <td>J25089-15</td>
+                                    <td>环保柜</td>
+                                    <td>莫植浩 / 张南</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:50%"></div></div><span>50%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-07-10</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="danger" data-order="J25089-16" data-product="环保柜" data-manager="黄超 / 彭泽锋" data-progress="8" data-deadline="2026-05-19">
+                                    <td>J25089-16</td>
+                                    <td>环保柜</td>
+                                    <td>黄超 / 彭泽锋</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-danger" style="width:8%"></div></div><span>8%</span></td>
+                                    <td><span class="tag tag-danger">严重滞后</span></td>
+                                    <td>2026-05-19</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="normal" data-order="J25089-13" data-product="环保柜" data-manager="梁凯豪 / 王康伟" data-progress="70" data-deadline="2026-06-28">
+                                    <td>J25089-13</td>
+                                    <td>环保柜</td>
+                                    <td>梁凯豪 / 王康伟</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:70%"></div></div><span>70%</span></td>
+                                    <td><span class="tag tag-normal">正常</span></td>
+                                    <td>2026-06-28</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="warn" data-order="J25089-12" data-product="环保柜" data-manager="马俊贤 / 赵志伸" data-progress="30" data-deadline="2026-06-08">
+                                    <td>J25089-12</td>
+                                    <td>环保柜</td>
+                                    <td>马俊贤 / 赵志伸</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:30%"></div></div><span>30%</span></td>
+                                    <td><span class="tag tag-warn">预警</span></td>
+                                    <td>2026-06-08</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                                <tr data-status="danger" data-order="J25089-14" data-product="环保柜" data-manager="阳锦涛 / 黄海涛" data-progress="15" data-deadline="2026-05-21">
+                                    <td>J25089-14</td>
+                                    <td>环保柜</td>
+                                    <td>阳锦涛 / 黄海涛</td>
+                                    <td><div class="table-progress"><div class="table-progress-bar bar-danger" style="width:15%"></div></div><span>15%</span></td>
+                                    <td><span class="tag tag-danger">严重滞后</span></td>
+                                    <td>2026-05-21</td>
+                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 标签4：管理 ========== -->
+            <div class="tab-panel" id="tab-manage">
+                <div class="panel-header">
+                    <h2 class="panel-title">管理</h2>
+                    <p class="panel-desc">管理系统基础数据：工程师管理、订单管理、进度类型管理、产品类型管理、双重确认管理、系统管理</p>
+                </div>
+                <div class="manage-content">
+                    <!-- 管理子标签 -->
+                    <div class="manage-tabs">
+                        <button class="manage-tab-btn active" data-manage="engineers">工程师管理</button>
+                        <button class="manage-tab-btn" data-manage="orders">订单管理</button>
+                        <button class="manage-tab-btn" data-manage="types">进度类型管理</button>
+                        <button class="manage-tab-btn" data-manage="products">产品类型管理</button>
+                        <button class="manage-tab-btn" data-manage="confirm">双重确认管理</button>
+                        <button class="manage-tab-btn" data-manage="system">系统管理</button>
+                    </div>
+
+                    <!-- 工程师管理 -->
+                    <div class="manage-panel active" id="manage-engineers">
+                        <div class="manage-toolbar">
+                            <button class="manage-add-btn" id="addEngBtn">+ 新增工程师</button>
+                            <input type="text" class="manage-search" placeholder="搜索工程师...">
+                        </div>
+                        <div class="eng-table-header">
+                            <span class="eng-col-sort">排序</span>
+                            <span class="eng-col-name">姓名</span>
+                            <span class="eng-col-role">职能分类</span>
+                            <span class="eng-col-progress">完成进度数</span>
+                            <span class="eng-col-time">创建时间</span>
+                            <span class="eng-col-action">操作</span>
+                        </div>
+                        <div class="manage-list eng-table-list" id="engManageList">
+                            <div class="manage-item eng-table-row draggable" data-index="1" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">黄超</span>
+                                <span class="eng-role-tag">结构</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="2" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">黄海涛</span>
+                                <span class="eng-role-tag">电气</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="3" draggable="true" data-progress="3" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">梁凯豪</span>
+                                <span class="eng-role-tag">结构</span>
+                                <span class="eng-progress"><span class="progress-badge">3项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="4" draggable="true" data-progress="2" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">马俊贤</span>
+                                <span class="eng-role-tag">结构</span>
+                                <span class="eng-progress"><span class="progress-badge">2项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="5" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">毛浚远</span>
+                                <span class="eng-role-tag">结构</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="6" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">莫植浩</span>
+                                <span class="eng-role-tag">结构</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="7" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">彭泽锋</span>
+                                <span class="eng-role-tag">电气</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="8" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">王康伟</span>
+                                <span class="eng-role-tag">电气</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="9" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">阳锦涛</span>
+                                <span class="eng-role-tag">结构</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="10" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">张南</span>
+                                <span class="eng-role-tag">电气</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                            <div class="manage-item eng-table-row draggable" data-index="11" draggable="true" data-progress="0" data-created="2026/4/8">
+                                <span class="eng-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="eng-name">赵志伸</span>
+                                <span class="eng-role-tag">电气</span>
+                                <span class="eng-progress"><span class="progress-badge">0项</span></span>
+                                <span class="eng-time">2026/4/8</span>
+                                <span class="eng-actions">
+                                    <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                    <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 订单管理 -->
+                    <div class="manage-panel" id="manage-orders">
+                        <div class="manage-toolbar">
+                            <button class="manage-add-btn" id="addOrderBtn">+ 新增订单</button>
+                            <input type="text" class="manage-search" placeholder="搜索订单...">
+                        </div>
+                        <div class="order-table-header">
+                            <span class="order-col-sort">排序</span>
+                            <span class="order-col-no">订单编号</span>
+                            <span class="order-col-product">产品类型</span>
+                            <span class="order-col-qty">数量</span>
+                            <span class="order-col-progress">进度</span>
+                            <span class="order-col-date">订单日期</span>
+                            <span class="order-col-delivery">交付日期</span>
+                            <span class="order-col-action">操作</span>
+                        </div>
+                        <div class="manage-list order-table-list" id="orderManageList">
+                            <div class="manage-item order-table-row draggable" data-index="1" draggable="true" data-quantity="1" data-order-date="2026/4/22" data-design-date="2026/4/26" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J26000-27</span>
+                                <span class="order-product">环网箱-环保空气绝缘</span>
+                                <span class="order-qty">1</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/4/22</span>
+                                <span class="order-delivery">2026/4/26</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="2" draggable="true" data-quantity="2" data-order-date="2026/4/22" data-design-date="2026/4/26" data-progress-done="2" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J26000-27</span>
+                                <span class="order-product">环网箱-固体绝缘</span>
+                                <span class="order-qty">2</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:20%"></div></div><span class="progress-text">2/10</span></span>
+                                <span class="order-date">2026/4/22</span>
+                                <span class="order-delivery">2026/4/26</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="3" draggable="true" data-quantity="5" data-order-date="2026/4/20" data-design-date="2026/5/10" data-progress-done="4" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J24051-24</span>
+                                <span class="order-product">配电箱</span>
+                                <span class="order-qty">5</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:40%"></div></div><span class="progress-text">4/10</span></span>
+                                <span class="order-date">2026/4/20</span>
+                                <span class="order-delivery">2026/5/10</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="4" draggable="true" data-quantity="3" data-order-date="2026/4/18" data-design-date="2026/5/5" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25088-11</span>
+                                <span class="order-product">环网箱-固体绝缘</span>
+                                <span class="order-qty">3</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/4/18</span>
+                                <span class="order-delivery">2026/5/5</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="5" draggable="true" data-quantity="1" data-order-date="2026/4/25" data-design-date="2026/5/15" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25041-19</span>
+                                <span class="order-product">环网箱-环保空气绝缘</span>
+                                <span class="order-qty">1</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/4/25</span>
+                                <span class="order-delivery">2026/5/15</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="6" draggable="true" data-quantity="4" data-order-date="2026/4/28" data-design-date="2026/5/20" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25055-02-00</span>
+                                <span class="order-product">环网柜</span>
+                                <span class="order-qty">4</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/4/28</span>
+                                <span class="order-delivery">2026/5/20</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="7" draggable="true" data-quantity="2" data-order-date="2026/4/30" data-design-date="2026/5/25" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25055-06</span>
+                                <span class="order-product">环网柜</span>
+                                <span class="order-qty">2</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/4/30</span>
+                                <span class="order-delivery">2026/5/25</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="8" draggable="true" data-quantity="1" data-order-date="2026/5/3" data-design-date="2026/5/28" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25055-03</span>
+                                <span class="order-product">环网柜</span>
+                                <span class="order-qty">1</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/3</span>
+                                <span class="order-delivery">2026/5/28</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="9" draggable="true" data-quantity="3" data-order-date="2026/4/18" data-design-date="2026/5/8" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25038</span>
+                                <span class="order-product">SGN-GB</span>
+                                <span class="order-qty">3</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/4/18</span>
+                                <span class="order-delivery">2026/5/8</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="10" draggable="true" data-quantity="1" data-order-date="2026/5/5" data-design-date="2026/6/5" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">TEST001</span>
+                                <span class="order-product">GGD</span>
+                                <span class="order-qty">1</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/5</span>
+                                <span class="order-delivery">2026/6/5</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="11" draggable="true" data-quantity="2" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25089-11</span>
+                                <span class="order-product">环保柜</span>
+                                <span class="order-qty">2</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/6</span>
+                                <span class="order-delivery">2026/6/1</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="12" draggable="true" data-quantity="1" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25089-15</span>
+                                <span class="order-product">环保柜</span>
+                                <span class="order-qty">1</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/6</span>
+                                <span class="order-delivery">2026/6/1</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="13" draggable="true" data-quantity="3" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25089-16</span>
+                                <span class="order-product">环保柜</span>
+                                <span class="order-qty">3</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/6</span>
+                                <span class="order-delivery">2026/6/1</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="14" draggable="true" data-quantity="2" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25089-13</span>
+                                <span class="order-product">环保柜</span>
+                                <span class="order-qty">2</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/6</span>
+                                <span class="order-delivery">2026/6/1</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="15" draggable="true" data-quantity="1" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25089-12</span>
+                                <span class="order-product">环保柜</span>
+                                <span class="order-qty">1</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/6</span>
+                                <span class="order-delivery">2026/6/1</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item order-table-row draggable" data-index="16" draggable="true" data-quantity="4" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
+                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="order-no">J25089-14</span>
+                                <span class="order-product">环保柜</span>
+                                <span class="order-qty">4</span>
+                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
+                                <span class="order-date">2026/5/6</span>
+                                <span class="order-delivery">2026/6/1</span>
+                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 进度类型配置 -->
+                    <div class="manage-panel" id="manage-types">
+                        <div class="manage-toolbar">
+                            <button class="manage-add-btn" id="addTypeBtn">+ 新增类型</button>
+                        </div>
+                        <div class="type-table-header">
+                            <span class="type-col-sort">排序</span>
+                            <span class="type-col-name">类型名称</span>
+                            <span class="type-col-role">适用职能</span>
+                            <span class="type-col-products">适用产品类型</span>
+                            <span class="type-col-time">创建时间</span>
+                            <span class="type-col-action">操作</span>
+                        </div>
+                        <div class="manage-list type-table-list" id="typeManageList">
+                            <div class="manage-item type-table-row draggable" data-index="1" draggable="true" data-role="电气" data-products="环网柜、环网箱、配电箱、GCK、中置柜、其他" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">一次电气</span>
+                                <span class="type-role"><span class="role-tag role-elec">电气</span></span>
+                                <span class="type-products">环网柜、环网箱、配电箱、GCK、中置柜、其他</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="2" draggable="true" data-role="结构" data-products="环网柜、环网箱、配电箱、GCK、中置柜、其他" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">气箱</span>
+                                <span class="type-role"><span class="role-tag role-struct">结构</span></span>
+                                <span class="type-products">环网柜、环网箱、配电箱、GCK、中置柜、其他</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="3" draggable="true" data-role="电气" data-products="环网柜、环网箱、配电箱、GCK、中置柜、其他" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">二次电气(一次设备)</span>
+                                <span class="type-role"><span class="role-tag role-elec">电气</span></span>
+                                <span class="type-products">环网柜、环网箱、配电箱、GCK、中置柜、其他</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="4" draggable="true" data-role="电气" data-products="环网柜、环网箱、配电箱、GCK、中置柜、其他" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">二次电气</span>
+                                <span class="type-role"><span class="role-tag role-elec">电气</span></span>
+                                <span class="type-products">环网柜、环网箱、配电箱、GCK、中置柜、其他</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="5" draggable="true" data-role="结构" data-products="环网柜、环网箱、配电箱、GCK、中置柜、其他" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">钣金(一次设备)</span>
+                                <span class="type-role"><span class="role-tag role-struct">结构</span></span>
+                                <span class="type-products">环网柜、环网箱、配电箱、GCK、中置柜、其他</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="6" draggable="true" data-role="电气" data-products="DTU设备相关" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">DTU电气</span>
+                                <span class="type-role"><span class="role-tag role-elec">电气</span></span>
+                                <span class="type-products">DTU设备相关</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="7" draggable="true" data-role="结构" data-products="户外箱体相关" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">户外箱</span>
+                                <span class="type-role"><span class="role-tag role-struct">结构</span></span>
+                                <span class="type-products">户外箱体相关</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="8" draggable="true" data-role="结构" data-products="DTU设备相关" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">DTU钣金</span>
+                                <span class="type-role"><span class="role-tag role-struct">结构</span></span>
+                                <span class="type-products">DTU设备相关</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="9" draggable="true" data-role="所有" data-products="电缆附件相关" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">电缆附件规格</span>
+                                <span class="type-role"><span class="role-tag role-all">所有</span></span>
+                                <span class="type-products">电缆附件相关</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                            <div class="manage-item type-table-row draggable" data-index="10" draggable="true" data-role="所有" data-products="环网柜、环网箱、配电箱、GCK、中置柜、GGD、DTU、环保柜、其他" data-created="2026/4/15">
+                                <span class="type-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
+                                <span class="type-name">其他</span>
+                                <span class="type-role"><span class="role-tag role-all">所有</span></span>
+                                <span class="type-products">环网柜、环网箱、配电箱、GCK、中置柜、GGD、DTU、环保柜、其他</span>
+                                <span class="type-time">2026/4/15</span>
+                                <span class="type-actions"><button class="icon-btn setting-btn" title="设置">⚙️</button><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 产品类型管理 -->
+                    <div class="manage-panel" id="manage-products">
+                        <div class="product-type-toolbar">
+                            <button class="manage-add-btn primary-btn" id="addTopProductBtn">+ 新增一级类型</button>
+                        </div>
+                        <div class="product-type-hint">
+                            <p>所有一级产品类型都可以添加二级分类</p>
+                            <p>二级分类可以变更所属的一级分类关系</p>
+                        </div>
+                        <div class="product-type-tree" id="productTypeTree">
+                            <!-- 环网柜 -->
+                            <div class="product-type-group expanded" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▼</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">环网柜</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children">
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">SF6绝缘</span>
+                                        <span class="type-parent">(环网柜)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属"><</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">固体绝缘</span>
+                                        <span class="type-parent">(环网柜)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属"><</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">环保空气绝缘</span>
+                                        <span class="type-parent">(环网柜)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属"><</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 环网箱 -->
+                            <div class="product-type-group expanded" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▼</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">环网箱</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children">
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">SF6绝缘</span>
+                                        <span class="type-parent">(环网箱)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属">&lt;</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">固体绝缘</span>
+                                        <span class="type-parent">(环网箱)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属">&lt;</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">环保空气绝缘</span>
+                                        <span class="type-parent">(环网箱)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属">&lt;</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 配电箱 -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">配电箱</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                    <div class="product-type-item child-item">
+                                        <span class="level-tag level-2">二级</span>
+                                        <span class="type-name">标准型</span>
+                                        <span class="type-parent">(配电箱)</span>
+                                        <span class="type-actions">
+                                            <button class="icon-btn sort-up" title="上移">↑</button>
+                                            <button class="icon-btn sort-down" title="下移">↓</button>
+                                            <button class="icon-btn move-btn" title="变更所属">&lt;</button>
+                                            <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                            <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- GCK -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">GCK</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                </div>
+                            </div>
+                            <!-- 中置柜 -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">中置柜</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                </div>
+                            </div>
+                            <!-- GGD -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">GGD</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                </div>
+                            </div>
+                            <!-- DTU -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">DTU</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                </div>
+                            </div>
+                            <!-- 环保柜 -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">环保柜</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                </div>
+                            </div>
+                            <!-- 其他 -->
+                            <div class="product-type-group" data-level="1">
+                                <div class="product-type-item parent-item">
+                                    <span class="expand-icon">▶</span>
+                                    <span class="level-tag level-1">一级</span>
+                                    <span class="type-name">其他</span>
+                                    <span class="type-actions">
+                                        <button class="icon-btn sort-up" title="上移">↑</button>
+                                        <button class="icon-btn sort-down" title="下移">↓</button>
+                                        <button class="icon-btn add-child" title="添加二级">+</button>
+                                        <button class="icon-btn edit-btn" title="编辑">✏️</button>
+                                        <button class="icon-btn del-btn" title="删除">🗑️</button>
+                                    </span>
+                                </div>
+                                <div class="product-children" style="display:none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 双重确认管理 -->
+                    <div class="manage-panel" id="manage-confirm">
+                        <div class="confirm-header">
+                            <div class="confirm-title-area">
+                                <h3 class="confirm-main-title">双重确认管理</h3>
+                                <p class="confirm-subtitle">管理结构与电气工程师需分别填写并保持一致的双重确认配置项</p>
+                            </div>
+                            <button class="manage-add-btn primary-btn" id="addConfirmConfigBtn">+ 新增配置</button>
+                        </div>
+                        <div class="confirm-groups" id="confirmGroups">
+                            <!-- 隔离方式 -->
+                            <div class="confirm-group">
+                                <div class="confirm-group-header">
+                                    <span class="group-name">隔离方式</span>
+                                    <span class="group-count">2个配置</span>
+                                </div>
+                                <div class="confirm-table-header">
+                                    <span class="confirm-col-sort">排序</span>
+                                    <span class="confirm-col-name">配置名称</span>
+                                    <span class="confirm-col-type">适用类型</span>
+                                    <span class="confirm-col-mode">选择方式</span>
+                                    <span class="confirm-col-action">产品类型</span>
+                                </div>
+                                <div class="confirm-table-body">
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">上隔离</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">下隔离</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 抽屉方式 -->
+                            <div class="confirm-group">
+                                <div class="confirm-group-header">
+                                    <span class="group-name">抽屉方式</span>
+                                    <span class="group-count">2个配置</span>
+                                </div>
+                                <div class="confirm-table-header">
+                                    <span class="confirm-col-sort">排序</span>
+                                    <span class="confirm-col-name">配置名称</span>
+                                    <span class="confirm-col-type">适用类型</span>
+                                    <span class="confirm-col-mode">选择方式</span>
+                                    <span class="confirm-col-action">产品类型</span>
+                                </div>
+                                <div class="confirm-table-body">
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">固定式</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">抽出式</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 户外箱外观 -->
+                            <div class="confirm-group">
+                                <div class="confirm-group-header">
+                                    <span class="group-name">户外箱外观</span>
+                                    <span class="group-count">5个配置</span>
+                                </div>
+                                <div class="confirm-table-header">
+                                    <span class="confirm-col-sort">排序</span>
+                                    <span class="confirm-col-name">配置名称</span>
+                                    <span class="confirm-col-type">适用类型</span>
+                                    <span class="confirm-col-mode">选择方式</span>
+                                    <span class="confirm-col-action">产品类型</span>
+                                </div>
+                                <div class="confirm-table-body">
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">颜色</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">防护等级</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">外观尺寸</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">安装方式</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                    <div class="confirm-row">
+                                        <span class="confirm-sort"><span class="sort-arrows">⇅</span></span>
+                                        <span class="confirm-name">铭牌标识</span>
+                                        <span class="confirm-type"><span class="type-tag-neutral">通用</span></span>
+                                        <span class="confirm-mode"><span class="mode-tag">二选一/多选一</span></span>
+                                        <span class="confirm-actions"><a class="action-link" href="javascript:;">设置</a><button class="icon-btn del-btn" title="删除">🗑️</button></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 系统管理 -->
+                    <div class="manage-panel" id="manage-system">
+                        <div class="system-settings">
+                            <!-- 系统标题 -->
+                            <div class="setting-group">
+                                <h3 class="setting-title">系统标题</h3>
+                                <p class="setting-desc">设置系统顶部显示的标题名称</p>
+                                <div class="setting-card">
+                                    <div class="setting-card-row">
+                                        <div class="setting-card-label">
+                                            <span class="card-label-title">页面标题</span>
+                                            <span class="card-label-desc">系统首页顶部显示的标题文字</span>
+                                        </div>
+                                        <div class="setting-card-control">
+                                            <input type="text" class="setting-input-wide" id="systemTitle" value="订单设计进度管理系统">
+                                            <button class="setting-save-btn" onclick="saveSystemTitle()">保存</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 日期配置 -->
+                            <div class="setting-group">
+                                <h3 class="setting-title">日期配置</h3>
+                                <p class="setting-desc">配置系统中使用的日期计算规则</p>
+                                <div class="setting-card">
+                                    <div class="setting-card-row">
+                                        <div class="setting-card-label">
+                                            <span class="card-label-title">设计完成日期</span>
+                                            <span class="card-label-desc">从订单日期起算，自动计算设计完成日期</span>
+                                        </div>
+                                        <div class="setting-card-control">
+                                            <input type="number" class="setting-input-sm" id="designDays" value="4" min="1">
+                                            <span class="setting-unit">天</span>
+                                            <button class="setting-save-btn" onclick="saveDesignDays()">保存</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 密码管理 -->
+                            <div class="setting-group">
+                                <h3 class="setting-title">密码管理</h3>
+                                <p class="setting-desc">修改管理密码以保护系统管理功能</p>
+                                <div class="setting-card">
+                                    <div class="setting-card-row">
+                                        <div class="setting-card-label">
+                                            <span class="card-label-title">管理密码</span>
+                                            <span class="card-label-desc">用于验证管理权限的密码</span>
+                                        </div>
+                                        <div class="setting-card-control">
+                                            <button class="setting-outline-btn" onclick="changePassword()">修改密码</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">新增</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="modalCancel">取消</button>
+                <button class="modal-btn modal-confirm" id="modalConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 配置适用产品类型弹窗 -->
+    <div class="modal-overlay" id="productConfigOverlay">
+        <div class="modal product-config-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">配置适用产品类型</h3>
+                <button class="modal-close" id="productConfigClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="config-desc">选择此进度类型适用的产品类型。勾选的产品类型将显示在进度录入中。</p>
+                <div class="config-current">
+                    <span class="config-label">当前配置：</span>
+                    <span class="config-value" id="configTypeName">一次电气</span>
+                </div>
+                <div class="config-actions">
+                    <button class="config-btn" id="selectAllBtn">全选</button>
+                    <a class="config-link" id="deselectAllBtn">取消全选（适用于全部）</a>
+                </div>
+                <div class="product-tree-wrap">
+                    <div class="product-tree" id="productTree">
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p1" checked data-children="c1-1,c1-2,c1-3">
+                                <label for="p1">环网柜</label>
+                                <span class="tree-count">(3/3)</span>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-child"><input type="checkbox" id="c1-1" checked><label for="c1-1">SF6绝缘</label></div>
+                                <div class="tree-child"><input type="checkbox" id="c1-2" checked><label for="c1-2">固体绝缘</label></div>
+                                <div class="tree-child"><input type="checkbox" id="c1-3" checked><label for="c1-3">环保空气绝缘</label></div>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p2" checked data-children="c2-1,c2-2,c2-3">
+                                <label for="p2">环网箱</label>
+                                <span class="tree-count">(3/3)</span>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-child"><input type="checkbox" id="c2-1" checked><label for="c2-1">SF6绝缘</label></div>
+                                <div class="tree-child"><input type="checkbox" id="c2-2" checked><label for="c2-2">固体绝缘</label></div>
+                                <div class="tree-child"><input type="checkbox" id="c2-3" checked><label for="c2-3">环保空气绝缘</label></div>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p3" checked>
+                                <label for="p3">配电箱</label>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p4" checked>
+                                <label for="p4">GCK</label>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p5" checked>
+                                <label for="p5">中置柜</label>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p6">
+                                <label for="p6">GGD</label>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p7">
+                                <label for="p7">DTU</label>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p8">
+                                <label for="p8">环保柜</label>
+                            </div>
+                        </div>
+                        <div class="tree-group">
+                            <div class="tree-parent">
+                                <input type="checkbox" id="p9">
+                                <label for="p9">其他</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="config-status">
+                    <span id="selectedCount">已选择 12 / 12 个产品类型</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="productConfigCancel">取消</button>
+                <button class="modal-btn modal-confirm" id="productConfigSave">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 变更所属分类弹窗 -->
+    <div class="modal-overlay" id="moveCategoryOverlay">
+        <div class="modal move-category-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">变更所属分类</h3>
+                <button class="modal-close" id="moveCategoryClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="move-desc">将"<span id="moveItemName">SF6绝缘</span>"移动到其他一级分类下</p>
+                <div class="move-form">
+                    <label class="move-label">选择目标一级分类</label>
+                    <select class="move-select" id="targetCategorySelect">
+                        <option value="">请选择</option>
+                        <option value="环网柜">环网柜</option>
+                        <option value="环网箱">环网箱</option>
+                        <option value="配电箱">配电箱</option>
+                        <option value="GCK">GCK</option>
+                        <option value="中置柜">中置柜</option>
+                        <option value="GGD">GGD</option>
+                        <option value="DTU">DTU</option>
+                        <option value="环保柜">环保柜</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="moveCategoryCancel">取消</button>
+                <button class="modal-btn modal-confirm" id="moveCategoryConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑产品类型弹窗 -->
+    <div class="modal-overlay" id="editProductTypeOverlay">
+        <div class="modal edit-product-type-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">编辑产品类型</h3>
+                    <p class="modal-subtitle">修改产品类型名称</p>
+                </div>
+                <button class="modal-close" id="editProductTypeClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-product-form">
+                    <label class="edit-product-label">产品类型名称</label>
+                    <input type="text" class="edit-product-input" id="editProductTypeName" placeholder="请输入产品类型名称">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="editProductTypeCancel">取消</button>
+                <button class="modal-btn modal-confirm dark-confirm" id="editProductTypeSave">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 双重确认管理-设置适用产品类型弹窗 -->
+    <div class="modal-overlay" id="confirmProductConfigOverlay">
+        <div class="modal confirm-product-config-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">设置适用产品类型</h3>
+                    <p class="modal-subtitle">选择该配置适用于哪些产品类型。不选择则对所有产品类型不可见。</p>
+                </div>
+                <button class="modal-close" id="confirmProductConfigClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-product-tree-wrap">
+                    <div class="confirm-product-tree" id="confirmProductTree">
+                        <!-- 环网柜 -->
+                        <div class="cproduct-parent" data-children="cc1-1,cc1-2,cc1-3">
+                            <input type="checkbox" id="cp1" class="parent-cb">
+                            <label for="cp1">环网柜</label>
+                            <span class="child-count" id="count-cp1">2/3</span>
+                        </div>
+                        <div class="cproduct-children">
+                            <div class="cproduct-child"><input type="checkbox" id="cc1-1"><label for="cc1-1">SF6绝缘</label></div>
+                            <div class="cproduct-child"><input type="checkbox" id="cc1-2"><label for="cc1-2">固体绝缘</label></div>
+                            <div class="cproduct-child"><input type="checkbox" id="cc1-3"><label for="cc1-3">环保空气绝缘</label></div>
+                        </div>
+                        <!-- 环网箱 -->
+                        <div class="cproduct-parent" data-children="cc2-1,cc2-2,cc2-3">
+                            <input type="checkbox" id="cp2" class="parent-cb">
+                            <label for="cp2">环网箱</label>
+                            <span class="child-count" id="count-cp2">2/3</span>
+                        </div>
+                        <div class="cproduct-children">
+                            <div class="cproduct-child"><input type="checkbox" id="cc2-1"><label for="cc2-1">SF6绝缘</label></div>
+                            <div class="cproduct-child"><input type="checkbox" id="cc2-2"><label for="cc2-2">固体绝缘</label></div>
+                            <div class="cproduct-child"><input type="checkbox" id="cc2-3"><label for="cc2-3">环保空气绝缘</label></div>
+                        </div>
+                        <!-- 配电箱 -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp3">
+                            <label for="cp3">配电箱</label>
+                        </div>
+                        <!-- GCK -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp4">
+                            <label for="cp4">GCK</label>
+                        </div>
+                        <!-- 中置柜 -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp5">
+                            <label for="cp5">中置柜</label>
+                        </div>
+                        <!-- GGD -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp6">
+                            <label for="cp6">GGD</label>
+                        </div>
+                        <!-- DTU -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp7">
+                            <label for="cp7">DTU</label>
+                        </div>
+                        <!-- 环保柜 -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp8">
+                            <label for="cp8">环保柜</label>
+                        </div>
+                        <!-- 其他 -->
+                        <div class="cproduct-parent standalone">
+                            <input type="checkbox" id="cp9">
+                            <label for="cp9">其他</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="confirmProductConfigCancel">取消</button>
+                <button class="modal-btn modal-confirm dark-confirm" id="confirmProductConfigSave">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增双重确认配置弹窗 -->
+    <div class="modal-overlay" id="addConfirmConfigOverlay">
+        <div class="modal add-confirm-config-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">新增双重确认配置</h3>
+                    <p class="modal-subtitle">添加新的双重确认配置项</p>
+                </div>
+                <button class="modal-close" id="addConfirmConfigClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="add-confirm-form">
+                    <div class="form-field">
+                        <label class="form-label">配置名称</label>
+                        <input type="text" class="form-input" id="confirmConfigName" placeholder="如：上隔离、下隔离、主母排等">
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">适用工程师类型</label>
+                        <select class="form-select" id="confirmConfigEngineerType">
+                            <option value="通用">通用（两者皆可）</option>
+                            <option value="结构">结构工程师</option>
+                            <option value="电气">电气工程师</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">选择方式</label>
+                        <select class="form-select" id="confirmConfigSelectMode">
+                            <option value="二选一/多选一">二选一/多选一（分组互斥）</option>
+                            <option value="单选">单选</option>
+                            <option value="多选">多选</option>
+                            <option value="填空">填空</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">分组名称</label>
+                        <input type="text" class="form-input" id="confirmConfigGroupName" placeholder="输入分组名称，相同名称的配置会自动分组">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="addConfirmConfigCancel">取消</button>
+                <button class="modal-btn modal-confirm dark-confirm" id="addConfirmConfigSubmit">添加</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
