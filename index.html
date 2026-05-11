@@ -35,70 +35,7 @@
                 <div class="section">
                     <h3 class="section-title">选择订单号</h3>
                     <div class="card-grid" id="orderGrid">
-                        <button class="order-card" data-order="J26000-27-1">
-                            <span class="order-id">J26000-27</span>
-                            <span class="order-type">环网箱-环保空气绝缘</span>
-                        </button>
-                        <button class="order-card" data-order="J26000-27-2">
-                            <span class="order-id">J26000-27</span>
-                            <span class="order-type">环网箱-固体绝缘</span>
-                        </button>
-                        <button class="order-card" data-order="J24051-24">
-                            <span class="order-id">J24051-24</span>
-                            <span class="order-type">配电箱</span>
-                        </button>
-                        <button class="order-card" data-order="J25088-11">
-                            <span class="order-id">J25088-11</span>
-                            <span class="order-type">环网箱-固体绝缘</span>
-                        </button>
-                        <button class="order-card" data-order="J25041-19">
-                            <span class="order-id">J25041-19</span>
-                            <span class="order-type">环网箱-环保空气绝缘</span>
-                        </button>
-                        <button class="order-card" data-order="J25055-02-00">
-                            <span class="order-id">J25055-02-00</span>
-                            <span class="order-type">环网柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25055-06">
-                            <span class="order-id">J25055-06</span>
-                            <span class="order-type">环网柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25055-03">
-                            <span class="order-id">J25055-03</span>
-                            <span class="order-type">环网柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25038">
-                            <span class="order-id">J25038</span>
-                            <span class="order-type">SGN-GB</span>
-                        </button>
-                        <button class="order-card" data-order="TEST001">
-                            <span class="order-id">TEST001</span>
-                            <span class="order-type">GGD</span>
-                        </button>
-                        <button class="order-card" data-order="J25089-11">
-                            <span class="order-id">J25089-11</span>
-                            <span class="order-type">环保柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25089-15">
-                            <span class="order-id">J25089-15</span>
-                            <span class="order-type">环保柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25089-16">
-                            <span class="order-id">J25089-16</span>
-                            <span class="order-type">环保柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25089-13">
-                            <span class="order-id">J25089-13</span>
-                            <span class="order-type">环保柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25089-12">
-                            <span class="order-id">J25089-12</span>
-                            <span class="order-type">环保柜</span>
-                        </button>
-                        <button class="order-card" data-order="J25089-14">
-                            <span class="order-id">J25089-14</span>
-                            <span class="order-type">环保柜</span>
-                        </button>
+                        <!-- 订单卡片由 JavaScript 从 localStorage 动态渲染 -->
                     </div>
                     <div class="more-btn-wrap">
                         <button class="more-btn" id="moreOrders">更多订单...</button>
@@ -173,6 +110,13 @@
                     </div>
                 </div>
 
+                <!-- 双重确认模块 -->
+                <div class="section" id="doubleConfirmSection" style="display: none;">
+                    <div class="double-confirm-content" id="doubleConfirmContent">
+                        <!-- 动态生成确认项 -->
+                    </div>
+                </div>
+
                 <!-- 提交按钮 -->
                 <div class="submit-wrap">
                     <button class="submit-btn" id="submitBtn" disabled>提交进度</button>
@@ -182,72 +126,31 @@
             <!-- ========== 标签2：计算与预警 ========== -->
             <div class="tab-panel" id="tab-calc">
                 <div class="panel-header">
-                    <h2 class="panel-title">进度计算与预警</h2>
-                    <p class="panel-desc">根据已录入的进度数据，自动计算各订单完成率并发出预警</p>
+                    <h2 class="panel-title">计算与预警</h2>
+                    <p class="panel-desc">实时监控项目进度，自动识别延期风险</p>
                 </div>
-                <div class="calc-content">
-                    <!-- 统计概览 -->
-                    <div class="calc-stats">
-                        <div class="calc-stat-card stat-total">
-                            <div class="calc-stat-num">16</div>
-                            <div class="calc-stat-label">总订单数</div>
-                        </div>
-                        <div class="calc-stat-card stat-normal">
-                            <div class="calc-stat-num">8</div>
-                            <div class="calc-stat-label">正常推进</div>
-                        </div>
-                        <div class="calc-stat-card stat-warn">
-                            <div class="calc-stat-num">5</div>
-                            <div class="calc-stat-label">进度预警</div>
-                        </div>
-                        <div class="calc-stat-card stat-danger">
-                            <div class="calc-stat-num">3</div>
-                            <div class="calc-stat-label">严重滞后</div>
-                        </div>
+                <!-- 统计概览 -->
+                <div class="calc-stats">
+                    <div class="calc-stat-card stat-total">
+                        <div class="calc-stat-num" id="stat-total">0</div>
+                        <div class="calc-stat-label">总订单数</div>
                     </div>
-                    <!-- 预警列表 -->
-                    <div class="alert-list">
-                        <div class="alert-row alert-danger">
-                            <span class="alert-tag">严重滞后</span>
-                            <span class="alert-order">J25055-02-00 环网柜</span>
-                            <span class="alert-detail">整体进度仅 12%，距截止日期仅剩 15 天</span>
-                        </div>
-                        <div class="alert-row alert-danger">
-                            <span class="alert-tag">严重滞后</span>
-                            <span class="alert-order">J25089-16 环保柜</span>
-                            <span class="alert-detail">整体进度仅 8%，距截止日期仅剩 10 天</span>
-                        </div>
-                        <div class="alert-row alert-danger">
-                            <span class="alert-tag">严重滞后</span>
-                            <span class="alert-order">J25089-14 环保柜</span>
-                            <span class="alert-detail">整体进度仅 15%，距截止日期仅剩 12 天</span>
-                        </div>
-                        <div class="alert-row alert-warn">
-                            <span class="alert-tag">预警</span>
-                            <span class="alert-order">J26000-27 环网箱-环保空气绝缘</span>
-                            <span class="alert-detail">整体进度 35%，建议加快结构设计</span>
-                        </div>
-                        <div class="alert-row alert-warn">
-                            <span class="alert-tag">预警</span>
-                            <span class="alert-order">J25088-11 环网箱-固体绝缘</span>
-                            <span class="alert-detail">整体进度 40%，二次电气进度偏慢</span>
-                        </div>
-                        <div class="alert-row alert-warn">
-                            <span class="alert-tag">预警</span>
-                            <span class="alert-order">J25041-19 环网箱-环保空气绝缘</span>
-                            <span class="alert-detail">整体进度 42%，钣金进度需关注</span>
-                        </div>
-                        <div class="alert-row alert-warn">
-                            <span class="alert-tag">预警</span>
-                            <span class="alert-order">J25055-06 环网柜</span>
-                            <span class="alert-detail">整体进度 38%，气箱设计进度偏慢</span>
-                        </div>
-                        <div class="alert-row alert-warn">
-                            <span class="alert-tag">预警</span>
-                            <span class="alert-order">J25089-12 环保柜</span>
-                            <span class="alert-detail">整体进度 30%，多项进度需加快</span>
-                        </div>
+                    <div class="calc-stat-card stat-normal">
+                        <div class="calc-stat-num" id="stat-normal">0</div>
+                        <div class="calc-stat-label">正常推进</div>
                     </div>
+                    <div class="calc-stat-card stat-warn">
+                        <div class="calc-stat-num" id="stat-warn">0</div>
+                        <div class="calc-stat-label">进度预警</div>
+                    </div>
+                    <div class="calc-stat-card stat-danger">
+                        <div class="calc-stat-num" id="stat-danger">0</div>
+                        <div class="calc-stat-label">严重滞后</div>
+                    </div>
+                </div>
+                <!-- 项目卡片容器 -->
+                <div class="project-cards-container" id="projectCardsContainer">
+                    <!-- 项目卡片将由JS动态生成 -->
                 </div>
             </div>
 
@@ -302,16 +205,32 @@
                                     <label class="form-label">订单编号</label>
                                     <input type="text" class="form-input" id="projectOrderNo" placeholder="请输入订单编号">
                                 </div>
-                                <div class="form-col">
+                            </div>
+
+                            <!-- 产品类型选择 -->
+                            <div class="form-row">
+                                <div class="form-col-full">
                                     <label class="form-label">产品类型</label>
-                                    <div class="product-type-grid" id="productTypeGrid">
-                                        <button class="product-type-btn" data-type="环网柜">环网柜</button>
-                                        <button class="product-type-btn" data-type="环网箱">环网箱</button>
-                                        <button class="product-type-btn" data-type="配电箱">配电箱</button>
-                                        <button class="product-type-btn" data-type="GCK">GCK</button>
-                                        <button class="product-type-btn" data-type="中置柜">中置柜</button>
-                                        <button class="product-type-btn" data-type="其他">其他</button>
+                                    <div class="product-type-section">
+                                        <div class="product-type-group">
+                                            <div class="product-type-label">一级类型</div>
+                                            <div class="product-type-grid" id="productTypeLevel1">
+                                                <button type="button" class="product-type-btn" data-type="环网柜">环网柜</button>
+                                                <button type="button" class="product-type-btn" data-type="环网箱">环网箱</button>
+                                                <button type="button" class="product-type-btn" data-type="配电箱">配电箱</button>
+                                                <button type="button" class="product-type-btn" data-type="GCK">GCK</button>
+                                                <button type="button" class="product-type-btn" data-type="中置柜">中置柜</button>
+                                                <button type="button" class="product-type-btn" data-type="其他">其他</button>
+                                            </div>
+                                        </div>
+                                        <div class="product-type-group" id="productTypeLevel2Section" style="display: none;">
+                                            <div class="product-type-label">二级类型</div>
+                                            <div class="product-type-grid product-type-grid-level2" id="productTypeLevel2">
+                                                <!-- 动态生成 -->
+                                            </div>
+                                        </div>
                                     </div>
+                                    <input type="hidden" id="selectedProductType" value="">
                                 </div>
                             </div>
 
@@ -375,150 +294,7 @@
                                 </tr>
                             </thead>
                             <tbody id="infoTableBody">
-                                <tr data-status="warn" data-order="J26000-27-1" data-product="环网箱-环保空气绝缘" data-manager="黄超 / 黄海涛" data-progress="35" data-deadline="2026-06-15">
-                                    <td>J26000-27</td>
-                                    <td>环网箱-环保空气绝缘</td>
-                                    <td>黄超 / 黄海涛</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:35%"></div></div><span>35%</span></td>
-                                    <td><span class="tag tag-warn">预警</span></td>
-                                    <td>2026-06-15</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J26000-27-2" data-product="环网箱-固体绝缘" data-manager="梁凯豪 / 张南" data-progress="55" data-deadline="2026-06-30">
-                                    <td>J26000-27</td>
-                                    <td>环网箱-固体绝缘</td>
-                                    <td>梁凯豪 / 张南</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:55%"></div></div><span>55%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-06-30</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J24051-24" data-product="配电箱" data-manager="马俊贤 / 彭泽锋" data-progress="78" data-deadline="2026-05-25">
-                                    <td>J24051-24</td>
-                                    <td>配电箱</td>
-                                    <td>马俊贤 / 彭泽锋</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:78%"></div></div><span>78%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-05-25</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="warn" data-order="J25088-11" data-product="环网箱-固体绝缘" data-manager="毛浚远 / 王康伟" data-progress="40" data-deadline="2026-06-10">
-                                    <td>J25088-11</td>
-                                    <td>环网箱-固体绝缘</td>
-                                    <td>毛浚远 / 王康伟</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:40%"></div></div><span>40%</span></td>
-                                    <td><span class="tag tag-warn">预警</span></td>
-                                    <td>2026-06-10</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="warn" data-order="J25041-19" data-product="环网箱-环保空气绝缘" data-manager="莫植浩 / 阳锦涛" data-progress="42" data-deadline="2026-06-20">
-                                    <td>J25041-19</td>
-                                    <td>环网箱-环保空气绝缘</td>
-                                    <td>莫植浩 / 阳锦涛</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:42%"></div></div><span>42%</span></td>
-                                    <td><span class="tag tag-warn">预警</span></td>
-                                    <td>2026-06-20</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="danger" data-order="J25055-02-00" data-product="环网柜" data-manager="黄超 / 赵志伸" data-progress="12" data-deadline="2026-05-24">
-                                    <td>J25055-02-00</td>
-                                    <td>环网柜</td>
-                                    <td>黄超 / 赵志伸</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-danger" style="width:12%"></div></div><span>12%</span></td>
-                                    <td><span class="tag tag-danger">严重滞后</span></td>
-                                    <td>2026-05-24</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="warn" data-order="J25055-06" data-product="环网柜" data-manager="梁凯豪 / 张南" data-progress="38" data-deadline="2026-06-18">
-                                    <td>J25055-06</td>
-                                    <td>环网柜</td>
-                                    <td>梁凯豪 / 张南</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:38%"></div></div><span>38%</span></td>
-                                    <td><span class="tag tag-warn">预警</span></td>
-                                    <td>2026-06-18</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J25055-03" data-product="环网柜" data-manager="马俊贤 / 彭泽锋" data-progress="65" data-deadline="2026-07-05">
-                                    <td>J25055-03</td>
-                                    <td>环网柜</td>
-                                    <td>马俊贤 / 彭泽锋</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:65%"></div></div><span>65%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-07-05</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J25038" data-product="SGN-GB" data-manager="黄海涛 / 王康伟" data-progress="82" data-deadline="2026-05-30">
-                                    <td>J25038</td>
-                                    <td>SGN-GB</td>
-                                    <td>黄海涛 / 王康伟</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:82%"></div></div><span>82%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-05-30</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="TEST001" data-product="GGD" data-manager="阳锦涛 / 赵志伸" data-progress="90" data-deadline="2026-05-15">
-                                    <td>TEST001</td>
-                                    <td>GGD</td>
-                                    <td>阳锦涛 / 赵志伸</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:90%"></div></div><span>90%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-05-15</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J25089-11" data-product="环保柜" data-manager="毛浚远 / 黄海涛" data-progress="60" data-deadline="2026-06-25">
-                                    <td>J25089-11</td>
-                                    <td>环保柜</td>
-                                    <td>毛浚远 / 黄海涛</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:60%"></div></div><span>60%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-06-25</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J25089-15" data-product="环保柜" data-manager="莫植浩 / 张南" data-progress="50" data-deadline="2026-07-10">
-                                    <td>J25089-15</td>
-                                    <td>环保柜</td>
-                                    <td>莫植浩 / 张南</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:50%"></div></div><span>50%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-07-10</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="danger" data-order="J25089-16" data-product="环保柜" data-manager="黄超 / 彭泽锋" data-progress="8" data-deadline="2026-05-19">
-                                    <td>J25089-16</td>
-                                    <td>环保柜</td>
-                                    <td>黄超 / 彭泽锋</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-danger" style="width:8%"></div></div><span>8%</span></td>
-                                    <td><span class="tag tag-danger">严重滞后</span></td>
-                                    <td>2026-05-19</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="normal" data-order="J25089-13" data-product="环保柜" data-manager="梁凯豪 / 王康伟" data-progress="70" data-deadline="2026-06-28">
-                                    <td>J25089-13</td>
-                                    <td>环保柜</td>
-                                    <td>梁凯豪 / 王康伟</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar" style="width:70%"></div></div><span>70%</span></td>
-                                    <td><span class="tag tag-normal">正常</span></td>
-                                    <td>2026-06-28</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="warn" data-order="J25089-12" data-product="环保柜" data-manager="马俊贤 / 赵志伸" data-progress="30" data-deadline="2026-06-08">
-                                    <td>J25089-12</td>
-                                    <td>环保柜</td>
-                                    <td>马俊贤 / 赵志伸</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-warn" style="width:30%"></div></div><span>30%</span></td>
-                                    <td><span class="tag tag-warn">预警</span></td>
-                                    <td>2026-06-08</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
-                                <tr data-status="danger" data-order="J25089-14" data-product="环保柜" data-manager="阳锦涛 / 黄海涛" data-progress="15" data-deadline="2026-05-21">
-                                    <td>J25089-14</td>
-                                    <td>环保柜</td>
-                                    <td>阳锦涛 / 黄海涛</td>
-                                    <td><div class="table-progress"><div class="table-progress-bar bar-danger" style="width:15%"></div></div><span>15%</span></td>
-                                    <td><span class="tag tag-danger">严重滞后</span></td>
-                                    <td>2026-05-21</td>
-                                    <td><button class="row-edit-btn">编辑</button><button class="row-del-btn">删除</button></td>
-                                </tr>
+                                <!-- 订单数据由 JavaScript 动态渲染 -->
                             </tbody>
                         </table>
                     </div>
@@ -684,7 +460,16 @@
                     <!-- 订单管理 -->
                     <div class="manage-panel" id="manage-orders">
                         <div class="manage-toolbar">
-                            <button class="manage-add-btn" id="addOrderBtn">+ 新增订单</button>
+                            <div class="sort-controls">
+                                <select id="orderSortField" class="sort-select">
+                                    <option value="createdAt">按录入时间</option>
+                                    <option value="designDate">按交付时间</option>
+                                    <option value="progress">按进度</option>
+                                </select>
+                                <button id="orderSortDirection" class="sort-direction-btn" data-direction="desc">
+                                    <span class="sort-icon">↓</span> 降序
+                                </button>
+                            </div>
                             <input type="text" class="manage-search" placeholder="搜索订单...">
                         </div>
                         <div class="order-table-header">
@@ -698,166 +483,7 @@
                             <span class="order-col-action">操作</span>
                         </div>
                         <div class="manage-list order-table-list" id="orderManageList">
-                            <div class="manage-item order-table-row draggable" data-index="1" draggable="true" data-quantity="1" data-order-date="2026/4/22" data-design-date="2026/4/26" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J26000-27</span>
-                                <span class="order-product">环网箱-环保空气绝缘</span>
-                                <span class="order-qty">1</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/4/22</span>
-                                <span class="order-delivery">2026/4/26</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="2" draggable="true" data-quantity="2" data-order-date="2026/4/22" data-design-date="2026/4/26" data-progress-done="2" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J26000-27</span>
-                                <span class="order-product">环网箱-固体绝缘</span>
-                                <span class="order-qty">2</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:20%"></div></div><span class="progress-text">2/10</span></span>
-                                <span class="order-date">2026/4/22</span>
-                                <span class="order-delivery">2026/4/26</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="3" draggable="true" data-quantity="5" data-order-date="2026/4/20" data-design-date="2026/5/10" data-progress-done="4" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J24051-24</span>
-                                <span class="order-product">配电箱</span>
-                                <span class="order-qty">5</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:40%"></div></div><span class="progress-text">4/10</span></span>
-                                <span class="order-date">2026/4/20</span>
-                                <span class="order-delivery">2026/5/10</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="4" draggable="true" data-quantity="3" data-order-date="2026/4/18" data-design-date="2026/5/5" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25088-11</span>
-                                <span class="order-product">环网箱-固体绝缘</span>
-                                <span class="order-qty">3</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/4/18</span>
-                                <span class="order-delivery">2026/5/5</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="5" draggable="true" data-quantity="1" data-order-date="2026/4/25" data-design-date="2026/5/15" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25041-19</span>
-                                <span class="order-product">环网箱-环保空气绝缘</span>
-                                <span class="order-qty">1</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/4/25</span>
-                                <span class="order-delivery">2026/5/15</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="6" draggable="true" data-quantity="4" data-order-date="2026/4/28" data-design-date="2026/5/20" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25055-02-00</span>
-                                <span class="order-product">环网柜</span>
-                                <span class="order-qty">4</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/4/28</span>
-                                <span class="order-delivery">2026/5/20</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="7" draggable="true" data-quantity="2" data-order-date="2026/4/30" data-design-date="2026/5/25" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25055-06</span>
-                                <span class="order-product">环网柜</span>
-                                <span class="order-qty">2</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/4/30</span>
-                                <span class="order-delivery">2026/5/25</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="8" draggable="true" data-quantity="1" data-order-date="2026/5/3" data-design-date="2026/5/28" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25055-03</span>
-                                <span class="order-product">环网柜</span>
-                                <span class="order-qty">1</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/3</span>
-                                <span class="order-delivery">2026/5/28</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="9" draggable="true" data-quantity="3" data-order-date="2026/4/18" data-design-date="2026/5/8" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25038</span>
-                                <span class="order-product">SGN-GB</span>
-                                <span class="order-qty">3</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/4/18</span>
-                                <span class="order-delivery">2026/5/8</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="10" draggable="true" data-quantity="1" data-order-date="2026/5/5" data-design-date="2026/6/5" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">TEST001</span>
-                                <span class="order-product">GGD</span>
-                                <span class="order-qty">1</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/5</span>
-                                <span class="order-delivery">2026/6/5</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="11" draggable="true" data-quantity="2" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25089-11</span>
-                                <span class="order-product">环保柜</span>
-                                <span class="order-qty">2</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/6</span>
-                                <span class="order-delivery">2026/6/1</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="12" draggable="true" data-quantity="1" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25089-15</span>
-                                <span class="order-product">环保柜</span>
-                                <span class="order-qty">1</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/6</span>
-                                <span class="order-delivery">2026/6/1</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="13" draggable="true" data-quantity="3" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25089-16</span>
-                                <span class="order-product">环保柜</span>
-                                <span class="order-qty">3</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/6</span>
-                                <span class="order-delivery">2026/6/1</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="14" draggable="true" data-quantity="2" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25089-13</span>
-                                <span class="order-product">环保柜</span>
-                                <span class="order-qty">2</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/6</span>
-                                <span class="order-delivery">2026/6/1</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="15" draggable="true" data-quantity="1" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25089-12</span>
-                                <span class="order-product">环保柜</span>
-                                <span class="order-qty">1</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/6</span>
-                                <span class="order-delivery">2026/6/1</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
-                            <div class="manage-item order-table-row draggable" data-index="16" draggable="true" data-quantity="4" data-order-date="2026/5/6" data-design-date="2026/6/1" data-progress-done="0" data-progress-total="10">
-                                <span class="order-sort-arrows"><span class="arrow-up">↑</span><span class="arrow-down">↓</span></span>
-                                <span class="order-no">J25089-14</span>
-                                <span class="order-product">环保柜</span>
-                                <span class="order-qty">4</span>
-                                <span class="order-progress"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div><span class="progress-text">0/10</span></span>
-                                <span class="order-date">2026/5/6</span>
-                                <span class="order-delivery">2026/6/1</span>
-                                <span class="order-actions"><button class="icon-btn edit-btn" title="编辑">✏️</button><button class="icon-btn del-btn" title="删除">🗑️</button></span>
-                            </div>
+                            <!-- 订单数据由 JavaScript 从 localStorage 动态加载 -->
                         </div>
                     </div>
 
