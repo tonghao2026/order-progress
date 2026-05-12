@@ -42,19 +42,12 @@ const DataStore = {
 
 
   // 加载数据
-
   load(key, defaultValue = null) {
-
     try {
-
       const data = localStorage.getItem(key);
-
       return data ? JSON.parse(data) : defaultValue;
-
     } catch (e) {
-
       console.warn('数据加载失败:', e);
-
       return defaultValue;
 
     }
@@ -84,18 +77,71 @@ const DataStore = {
   // 清空所有数据
 
   clear() {
-
     Object.values(this.KEYS).forEach(key => {
-
       this.remove(key);
-
     });
+  },
 
+  // 检查并加载预设数据
+  initWithPresetData() {
+    // 检查是否有预设数据可用
+    if (typeof PRESET_DATA === 'undefined') {
+      console.log('没有预设数据，跳过自动加载');
+      return;
+    }
+
+    let hasLoadedData = false;
+
+    // 检查并加载订单数据
+    const existingOrders = this.load(this.KEYS.ORDERS, []);
+    if (existingOrders.length === 0 && PRESET_DATA.orders) {
+      this.save(this.KEYS.ORDERS, PRESET_DATA.orders);
+      console.log(`✅ 已加载 ${PRESET_DATA.orders.length} 个预设订单`);
+      hasLoadedData = true;
+    }
+
+    // 检查并加载工程师数据
+    const existingEngineers = this.load(this.KEYS.ENGINEERS, []);
+    if (existingEngineers.length === 0 && PRESET_DATA.engineers) {
+      this.save(this.KEYS.ENGINEERS, PRESET_DATA.engineers);
+      console.log(`✅ 已加载 ${PRESET_DATA.engineers.length} 个预设工程师`);
+      hasLoadedData = true;
+    }
+
+    // 检查并加载进度类型数据
+    const existingTypes = this.load(this.KEYS.PROGRESS_TYPES, []);
+    if (existingTypes.length === 0 && PRESET_DATA.progressTypes) {
+      this.save(this.KEYS.PROGRESS_TYPES, PRESET_DATA.progressTypes);
+      console.log(`✅ 已加载 ${PRESET_DATA.progressTypes.length} 个预设进度类型`);
+      hasLoadedData = true;
+    }
+
+    // 检查并加载双重确认配置
+    const existingConfig = this.load(this.KEYS.CONFIG_GROUPS, []);
+    if (existingConfig.length === 0 && PRESET_DATA.configGroups) {
+      this.save(this.KEYS.CONFIG_GROUPS, PRESET_DATA.configGroups);
+      console.log(`✅ 已加载 ${PRESET_DATA.configGroups.length} 个预设双重确认配置组`);
+      hasLoadedData = true;
+    }
+
+    // 检查并加载产品类型数据
+    const existingProductTypes = this.load(this.KEYS.PRODUCT_TYPES, []);
+    if (existingProductTypes.length === 0 && PRESET_DATA.productTypes) {
+      this.save(this.KEYS.PRODUCT_TYPES, PRESET_DATA.productTypes);
+      console.log(`✅ 已加载 ${PRESET_DATA.productTypes.length} 个预设产品类型`);
+      hasLoadedData = true;
+    }
+
+    if (hasLoadedData) {
+      console.log('🎉 预设数据加载完成！');
+    } else {
+      console.log('📦 使用已保存的本地数据');
+    }
   }
-
 };
 
-
+// 页面加载时自动初始化预设数据
+DataStore.initWithPresetData();
 
 document.addEventListener('DOMContentLoaded', () => {
 
