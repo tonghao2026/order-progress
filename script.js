@@ -528,44 +528,65 @@ document.addEventListener('DOMContentLoaded', () => {
     return typesMap;
   }
 
+  // 动态渲染一级产品类型按钮
+  function renderProductTypeButtons() {
+    if (!level1Grid) return;
+    const productTypes = loadProductTypesForForm();
+    level1Grid.innerHTML = '';
+    
+    Object.keys(productTypes).forEach(type1 => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'product-type-btn';
+      btn.dataset.type = type1;
+      btn.textContent = type1;
+      level1Grid.appendChild(btn);
+    });
+  }
+
+  // 页面加载时渲染一级产品类型按钮
+  renderProductTypeButtons();
+
+  // 一级类型点击事件 - 使用事件委托
   if (level1Grid) {
-    level1Grid.querySelectorAll('.product-type-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        // 移除其他一级类型的选中状态
-        level1Grid.querySelectorAll('.product-type-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
+    level1Grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.product-type-btn');
+      if (!btn) return;
+
+      // 移除其他一级类型的选中状态
+      level1Grid.querySelectorAll('.product-type-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      
+      const type1 = btn.dataset.type;
+      const productTypes = loadProductTypesForForm();
+      const level2Types = productTypes[type1] || [];
+      
+      // 显示/隐藏二级类型
+      if (level2Types.length > 0) {
+        level2Section.style.display = 'block';
+        level2Grid.innerHTML = '';
         
-        const type1 = btn.dataset.type;
-        const productTypes = loadProductTypesForForm();
-        const level2Types = productTypes[type1] || [];
-        
-        // 显示/隐藏二级类型
-        if (level2Types.length > 0) {
-          level2Section.style.display = 'block';
-          level2Grid.innerHTML = '';
-          
-          level2Types.forEach(type2 => {
-            const btn2 = document.createElement('button');
-            btn2.type = 'button';
-            btn2.className = 'product-type-btn';
-            btn2.dataset.type = type2;
-            btn2.textContent = type2;
-            btn2.addEventListener('click', () => {
-              level2Grid.querySelectorAll('.product-type-btn').forEach(b => b.classList.remove('selected'));
-              btn2.classList.add('selected');
-              // 更新隐藏字段
-              selectedProductTypeInput.value = `${type1}-${type2}`;
-            });
-            level2Grid.appendChild(btn2);
+        level2Types.forEach(type2 => {
+          const btn2 = document.createElement('button');
+          btn2.type = 'button';
+          btn2.className = 'product-type-btn';
+          btn2.dataset.type = type2;
+          btn2.textContent = type2;
+          btn2.addEventListener('click', () => {
+            level2Grid.querySelectorAll('.product-type-btn').forEach(b => b.classList.remove('selected'));
+            btn2.classList.add('selected');
+            // 更新隐藏字段
+            selectedProductTypeInput.value = `${type1}-${type2}`;
           });
-        } else {
-          level2Section.style.display = 'none';
-          level2Grid.innerHTML = '';
-        }
-        
-        // 更新隐藏字段
-        selectedProductTypeInput.value = type1;
-      });
+          level2Grid.appendChild(btn2);
+        });
+      } else {
+        level2Section.style.display = 'none';
+        level2Grid.innerHTML = '';
+      }
+      
+      // 更新隐藏字段
+      selectedProductTypeInput.value = type1;
     });
   }
 
@@ -4468,6 +4489,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     DataStore.save(DataStore.KEYS.PRODUCT_TYPES, data);
+    // 同步刷新项目信息模块的一级产品类型按钮
+    if (typeof renderProductTypeButtons === 'function') {
+      renderProductTypeButtons();
+    }
   }
 
   function loadProductTypes() {
