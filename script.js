@@ -619,6 +619,10 @@ document.addEventListener('DOMContentLoaded', () => {
       renderOrderTable();
       // 同步刷新进度录入页的订单卡片
       renderOrderCards();
+      // 同步刷新管理模块的订单列表
+      if (typeof renderOrderManageList === 'function') {
+        renderOrderManageList();
+      }
 
       showToast(`项目信息提交成功！\n订单：${orderNo}\n类型：${productType}\n数量：${quantity}`, 'success');
 
