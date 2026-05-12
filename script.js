@@ -307,38 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // 工程师卡片单选
-
-  engineerCards.forEach(card => {
-
-    card.addEventListener('click', () => {
-
-      engineerCards.forEach(c => c.classList.remove('selected'));
-
-      card.classList.add('selected');
-
-      updateSubmitState();
-
-    });
-
-  });
-
-
-
-  // 进度类型多选
-
-  typeCards.forEach(card => {
-
-    card.addEventListener('click', () => {
-
-      card.classList.toggle('selected');
-
-    });
-
-  });
-
-
-
   // 提交按钮
 
   if (submitBtn) {
@@ -367,8 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 重置选择
       document.querySelectorAll('.order-card').forEach(c => c.classList.remove('selected'));
-      engineerCards.forEach(c => c.classList.remove('selected'));
-      typeCards.forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.engineer-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
 
       updateSubmitState();
 
