@@ -163,15 +163,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========== 进度录入页 ==========
-  const engineerCards = document.querySelectorAll('.engineer-card');
-  const typeCards = document.querySelectorAll('.type-card');
   const submitBtn = document.getElementById('submitBtn');
+  let currentEngineerRole = null; // 当前选中的工程师职能
 
   function updateSubmitState() {
     const hasOrder = document.querySelector('.order-card.selected');
     const hasEngineer = document.querySelector('.engineer-card.selected');
     if (submitBtn) {
       submitBtn.disabled = !(hasOrder && hasEngineer);
+    }
+  }
+
+  // 根据工程师职能过滤进度类型
+  function filterProgressTypesByRole(role) {
+    currentEngineerRole = role;
+    const types = DataStore.load(DataStore.KEYS.PROGRESS_TYPES, []);
+    const typeGrid = document.getElementById('typeGrid');
+    if (!typeGrid) return;
+
+    typeGrid.innerHTML = '';
+    
+    types.forEach(type => {
+      // 如果进度类型的 role 是 "所有"，或者与工程师的 role 匹配，则显示
+      const typeRole = type.role || '所有';
+      if (typeRole === '所有' || typeRole === role || !role) {
+        const btn = document.createElement('button');
+        btn.className = 'type-card';
+        btn.setAttribute('data-type', type.name);
+        btn.setAttribute('data-role', typeRole);
+        btn.textContent = type.name;
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('selected');
+          updateDoubleConfirmVisibility();
+        });
+        typeGrid.appendChild(btn);
+      }
+    });
+
+    // 如果没有匹配的类型，显示提示
+    if (typeGrid.children.length === 0) {
+      typeGrid.innerHTML = '<div style="text-align:center;padding:20px;color:#999;grid-column:1/-1;">该工程师无可用进度类型</div>';
     }
   }
 
@@ -3275,23 +3306,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // 初始化产品树状态
 
   function initConfirmProductTree() {
+    // 先清空所有选择
+    document.querySelectorAll('#confirmProductTree input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
 
-    // 环网柜默认选中2/3
+    // 如果有当前编辑的配置项，加载已保存的产品类型
+    if (window.currentEditConfirmRow) {
+      const productTypesStr = window.currentEditConfirmRow.dataset.productTypes || '';
+      const productTypes = productTypesStr ? productTypesStr.split(',').filter(p => p.trim()) : [];
 
-    document.getElementById('cc1-2').checked = true;
+      // 遍历所有复选框，匹配产品类型
+      document.querySelectorAll('#confirmProductTree input[type="checkbox"]').forEach(cb => {
+        const label = cb.nextElementSibling;
+        if (label && label.textContent) {
+          const labelText = label.textContent.trim();
+          if (productTypes.includes(labelText)) {
+            cb.checked = true;
+          }
+        }
+      });
+    } else {
+      // 默认选中固体绝缘和环保空气绝缘
+      document.getElementById('cc1-2').checked = true;
+      document.getElementById('cc1-3').checked = true;
+      document.getElementById('cc2-2').checked = true;
+      document.getElementById('cc2-3').checked = true;
+    }
 
-    document.getElementById('cc1-3').checked = true;
-
+    // 更新父级状态
     updateParentState('cp1', ['cc1-1', 'cc1-2', 'cc1-3']);
-
-    // 环网箱默认选中2/3
-
-    document.getElementById('cc2-2').checked = true;
-
-    document.getElementById('cc2-3').checked = true;
-
     updateParentState('cp2', ['cc2-1', 'cc2-2', 'cc2-3']);
-
   }
 
 
@@ -3345,15 +3390,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // 保存按钮
 
   if (confirmProductConfigSave) {
-
     confirmProductConfigSave.addEventListener('click', () => {
+      // 收集选中的产品类型
+      const selectedTypes = [];
+      document.querySelectorAll('#confirmProductTree input[type="checkbox"]:checked').forEach(cb => {
+        const label = cb.nextElementSibling;
+        if (label && label.textContent) {
+          selectedTypes.push(label.textContent.trim());
+        }
+      });
+
+      // 保存到当前编辑的配置项（通过 data 属性存储）
+      if (window.currentEditConfirmRow) {
+        window.currentEditConfirmRow.dataset.productTypes = selectedTypes.join(',');
+      }
 
       showToast('配置已保存', 'success');
-
       closeConfirmProductConfig();
-
+      saveConfigGroups();
     });
-
   }
 
 
@@ -3633,39 +3688,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // 保存配置分组数据到 localStorage
 
   function saveConfigGroups() {
-
     const groups = document.querySelectorAll('.confirm-group');
-
     const data = [];
 
     groups.forEach(group => {
-
       const groupName = group.querySelector('.group-name')?.textContent || '';
-
       const rows = group.querySelectorAll('.confirm-row');
-
       const items = [];
 
       rows.forEach(row => {
+        // 获取产品类型（从 data-productTypes 属性）
+        const productTypesStr = row.dataset.productTypes || '';
+        const productTypes = productTypesStr ? productTypesStr.split(',').filter(p => p.trim()) : [];
 
         items.push({
-
           name: row.querySelector('.confirm-name')?.textContent || '',
-
           type: row.querySelector('.type-tag-neutral')?.textContent || '',
-
-          mode: row.querySelector('.mode-tag')?.textContent || ''
-
+          mode: row.querySelector('.mode-tag')?.textContent || '',
+          productTypes: productTypes
         });
-
       });
 
       data.push({ groupName, items });
-
     });
 
     DataStore.save(DataStore.KEYS.CONFIG_GROUPS, data);
-
   }
 
 
@@ -3831,11 +3878,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 设置
 
     row.querySelector('.action-link')?.addEventListener('click', (e) => {
-
       e.preventDefault();
-
+      // 设置当前编辑的配置项
+      window.currentEditConfirmRow = row;
       openConfirmProductConfig();
-
     });
 
     // 排序
@@ -3894,11 +3940,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.action-link').forEach(link => {
 
     link.addEventListener('click', (e) => {
-
       e.preventDefault();
-
+      // 设置当前编辑的配置项
+      window.currentEditConfirmRow = link.closest('.confirm-row');
       openConfirmProductConfig();
-
     });
 
   });
@@ -3944,73 +3989,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ========== 从localStorage加载数据到进度录入页面 ==========
   function loadEntryPageData() {
-    // 加载工程师 - 总是从数据库加载，如果没有数据则保留HTML默认数据
+    // 加载工程师 - 总是从数据库加载，如果没有数据则显示空状态
     const engineers = DataStore.load(DataStore.KEYS.ENGINEERS, []);
     const engineerGrid = document.getElementById('engineerGrid');
     if (engineerGrid) {
+      engineerGrid.innerHTML = '';
       if (engineers.length > 0) {
-        // 有数据，替换HTML内容
-        engineerGrid.innerHTML = '';
         engineers.forEach(eng => {
           const btn = document.createElement('button');
           btn.className = 'engineer-card';
           btn.setAttribute('data-engineer', eng.name);
+          btn.setAttribute('data-role', eng.role || '');
           btn.innerHTML = `
             <span class="eng-name">${eng.name}</span>
-            <span class="eng-role">${eng.role}</span>
+            <span class="eng-role">${eng.role || ''}</span>
           `;
           btn.addEventListener('click', () => {
             document.querySelectorAll('.engineer-card').forEach(c => c.classList.remove('selected'));
             btn.classList.add('selected');
             updateSubmitState();
             updateDoubleConfirmVisibility();
+            // 根据工程师职能过滤进度类型
+            filterProgressTypesByRole(eng.role);
           });
           engineerGrid.appendChild(btn);
         });
       } else {
-        // 没有数据，给HTML中的默认按钮绑定事件
-        engineerGrid.querySelectorAll('.engineer-card').forEach(btn => {
-          btn.addEventListener('click', () => {
-            document.querySelectorAll('.engineer-card').forEach(c => c.classList.remove('selected'));
-            btn.classList.add('selected');
-            updateSubmitState();
-            updateDoubleConfirmVisibility();
-          });
-        });
+        engineerGrid.innerHTML = '<div style="text-align:center;padding:20px;color:#999;grid-column:1/-1;">暂无工程师，请在管理模块添加</div>';
       }
     }
 
     // 加载订单 - 从 localStorage 动态渲染（由 renderOrderCards 函数处理）
     renderOrderCards();
 
-    // 加载进度类型 - 总是从数据库加载，如果没有数据则保留HTML默认数据
-    const types = DataStore.load(DataStore.KEYS.PROGRESS_TYPES, []);
-    const typeGrid = document.getElementById('typeGrid');
-    if (typeGrid) {
-      if (types.length > 0) {
-        // 有数据，替换HTML内容
-        typeGrid.innerHTML = '';
-        types.forEach(type => {
-          const btn = document.createElement('button');
-          btn.className = 'type-card';
-          btn.setAttribute('data-type', type.name);
-          btn.textContent = type.name;
-          btn.addEventListener('click', () => {
-            btn.classList.toggle('selected');
-            updateDoubleConfirmVisibility();
-          });
-          typeGrid.appendChild(btn);
-        });
-      } else {
-        // 没有数据，给HTML中的默认按钮绑定事件
-        typeGrid.querySelectorAll('.type-card').forEach(btn => {
-          btn.addEventListener('click', () => {
-            btn.classList.toggle('selected');
-            updateDoubleConfirmVisibility();
-          });
-        });
-      }
-    }
+    // 加载进度类型 - 初始显示所有类型（选择工程师后会过滤）
+    filterProgressTypesByRole(null);
 
     // 加载产品类型按钮（项目信息页面）
     const productTypeOptions = getProductTypeOptions();
@@ -4039,8 +4052,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEntryPageData();
 
   // ========== 双重确认模块 ==========
-  // 定义需要双重确认的产品类型
-  const DOUBLE_CONFIRM_PRODUCT_TYPES = ['固体绝缘', '环保空气绝缘'];
   
   // 更新双重确认模块的显示/隐藏
   function updateDoubleConfirmVisibility() {
@@ -4052,10 +4063,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedOrder = document.querySelector('.order-card.selected');
     const productType = selectedOrder?.dataset.productType || '';
     
-    // 检查是否需要显示双重确认
-    const needsDoubleConfirm = DOUBLE_CONFIRM_PRODUCT_TYPES.some(type => 
-      productType.includes(type)
-    );
+    // 从双重确认管理获取配置，判断是否需要显示双重确认
+    const configGroups = DataStore.load(DataStore.KEYS.CONFIG_GROUPS, []);
+    
+    // 检查是否有适用于当前产品类型的配置
+    let needsDoubleConfirm = false;
+    
+    if (configGroups.length > 0) {
+      // 遍历所有配置组，检查是否有匹配的产品类型
+      configGroups.forEach(group => {
+        const items = group.items || [];
+        items.forEach(item => {
+          // 如果配置项有 productTypes 字段，检查是否匹配
+          if (item.productTypes && item.productTypes.length > 0) {
+            const matched = item.productTypes.some(pt => 
+              productType.includes(pt) || pt === '所有' || pt === productType
+            );
+            if (matched) needsDoubleConfirm = true;
+          } else {
+            // 如果没有设置产品类型，默认显示（兼容旧数据）
+            needsDoubleConfirm = true;
+          }
+        });
+      });
+    } else {
+      // 没有配置数据时，使用默认规则
+      const defaultTypes = ['固体绝缘', '环保空气绝缘'];
+      needsDoubleConfirm = defaultTypes.some(type => productType.includes(type));
+    }
     
     if (needsDoubleConfirm) {
       doubleConfirmSection.style.display = 'block';
